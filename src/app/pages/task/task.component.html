@@ -1,0 +1,55 @@
+<h1>Edit<small> Task</small> </h1>
+<hr>
+<div class="row">
+    <div class="col text-end">
+        <button class="btn btn-danger" routerLink="/tasks">
+      <i class="fa fa-arrow-left"></i>
+      Regresar
+    </button>
+    </div>
+</div>
+<div class="row animated fadeIn faster">
+    <div class="col">
+
+        <form autocomplete="off" [formGroup]="forma" (ngSubmit)="guardar()">
+
+            <div class="form-group">
+                <label>ID</label>
+                <input type="number" class="form-control" placeholder="ID" formControlName="id">
+                <small class="form-text text-muted">Este campo es autogenerado</small>
+            </div>
+            <div class="form-group">
+                <label>Title</label>
+                <input type="text" class="form-control" placeholder="Titulo de la tarea" formControlName="title" [class.is-invalid]="titleNoValido">
+                <small class="text-danger" *ngIf="forma.get('title')?.hasError('required') && titleNoValido">Dato requerido</small>
+                <small class="text-danger" *ngIf="forma.get('title')?.hasError('minlength') && titleNoValido">Debe cumpir mínimo 5 caraceres</small>
+            </div>
+
+            <div class="form-group">
+                <label>Description</label>
+                <input type="text" class="form-control" placeholder="Descripción de la tarea" formControlName="description" [class.is-invalid]="descriptionNoValido">
+                <small class="text-danger" *ngIf="forma.get('description')?.hasError('required') && descriptionNoValido">Dato requerido</small>
+                <small class="text-danger" *ngIf="forma.get('description')?.hasError('minlength') && descriptionNoValido">Debe cumplir mínino 5 caracteres</small>
+            </div>
+            <div class="form-group">
+                <label>Estatus</label>
+                <br>
+                <button *ngIf="forma.get('status')?.getRawValue() == 'DONE'" (click)="forma.get('status')?.setValue('INCOMPLETE')" class="btn btn-outline-danger w-50" type="button">
+            <i class="fa fa-dizzy"></i>
+            INCOMPLETE
+            </button>
+                <button *ngIf="forma.get('status')?.getRawValue() == 'INCOMPLETE'" (click)="forma.get('status')?.setValue('DONE')" class="btn btn-outline-success w-50" type="button">
+                <i class="fa fa-smile-wink"></i>
+                DONE
+                </button>
+            </div>
+            <hr>
+            <div class="form-group text-center">
+                <button type="submit" [disabled]="forma.invalid" class="btn btn-primary w-25">
+                    <i class="fa fa-save"></i>
+                    Guardar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

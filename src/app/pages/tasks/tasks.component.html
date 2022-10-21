@@ -1,0 +1,72 @@
+<h1 class="animate__animated animate__zoomIn">TO DO LIST</h1>
+
+<nav class="navbar navbar-light bg-light animate__animated animate__zoomIn">
+    <div class="container-fluid">
+        <form class="d-flex">
+            <input class="form-control me-2" [(ngModel)]='searchText' name="searchText" type="search" placeholder="Search" aria-label="Search" (keyup)="searchTitle(searchByTitle.value)" #searchByTitle>
+            <button class="btn btn-outline-success" (click)="searchTitle(searchByTitle.value)" type="submit">Search</button>
+        </form>
+    </div>
+</nav>
+
+<hr>
+<div class="row">
+    <div class="col text-end">
+        <button type="button" class="btn btn-primary" routerLink="/task/nuevo" routerLinkActive="router-link-active">
+            <i class="fa-thin fa-plus"></i>
+            Add
+        </button>
+    </div>
+</div>
+<table *ngIf="!cargando && tasks.length > 0" class="table mt-3 animate__animated  animate__zoomIn animated fadeIn faster">
+    <thead class="table-light">
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">ID</th>
+            <th scope="col">Title</th>
+            <th scope="col">Description</th>
+            <th scope="col">Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let task of tasks;let i = index">
+            <th scope="row">{{i +1}} </th>
+            <td>{{task.id}}</td>
+            <td>{{task.title}}</td>
+            <td>{{task.description}}</td>
+            <td>
+                <button *ngIf="task.status == 'DONE'" class="btn btn-primary btn-sm " (click)="updateStatus('INCOMPLETE',task )">
+                     DONE
+               </button>
+                <button *ngIf="task.status == 'INCOMPLETE'" class="btn btn-secondary btn-sm " (click)="updateStatus('DONE',task )">
+                     INCOMPLETE
+               </button>
+            </td>
+            <td>
+                <button class="btn btn-info border border-dark m-1 btn-sm" [routerLink]="['/task',task.id]">
+                    <i class="fa-solid fa-pen"></i>
+               </button>
+                <button class="btn btn-danger border border-dark m-0 btn-sm" (click)="borrarTask(task)">
+                <i class="fa-solid fa-trash-can"></i>
+           </button>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<div *ngIf="!cargando && tasks.length ===0" class="alert alert-warning text-center mt-3 animated fadeIn faster">
+    <h4 class="alert-heading">No hay registros</h4>
+    <p>
+        <i class="fa-solid fa-circle-exclamation fa-2x"></i>
+    </p>
+</div>
+
+<div *ngIf="cargando" class="alert alert-info text-center mt-3 animated fadeIn faster">
+    <h4 class="alert-heading">Cargando...</h4>
+    <p>
+        <i class="fa-solid fa-rotate fa-spin fa-2x"></i>
+    </p>
+    <p class="mb-0">
+        Espere por favor
+    </p>
+</div>
