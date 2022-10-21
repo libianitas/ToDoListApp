@@ -1,7 +1,7 @@
-# TODOLIST
+# TODOLISTAPP
 App para administrar un listado de tareas. Frontend en ANGULAR 14
 
-# ToDoList
+# ToDoListApp
 # FRONTEND ANGULAR 14
  
    App para administrar un listado de tareas.
